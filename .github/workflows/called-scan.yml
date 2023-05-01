@@ -1,0 +1,68 @@
+name: "Called_Scan"
+
+on:
+  workflow_call:
+    inputs:
+      RUNNER_TYPE:
+        description: 'value for the runs-on arg'
+        required: true
+        type: string
+      LANGUAGES:
+        description: 'Languages to scan'
+        required: true
+        type: string
+      BUILD_COMMAND:
+        description: "Optional input to specify manual build command. The multiline syntax is supported"
+        required: false
+        type: string
+
+jobs:
+  scan:
+    name: code_scan
+    runs-on: ["${{ inputs.RUNNER_TYPE }}"]
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+#    runs-on: ["${{ github.event.inputs.RUNNER_TYPE }}"]
+#    permissions:
+#      actions: read
+#      contents: read
+#      security-events: write
+
+    strategy:
+      fail-fast: true
+      matrix:
+        language: ${{ fromJSON(github.event.inputs.LANGUAGES) }}
+#        language: ${{ fromJSON(inputs.LANGUAGES) }}
+
+    steps:
+    - name: check_inputs
+      run: |
+        echo "RUNNER_TYPE = ${{ inputs.RUNNER_TYPE }}"
+        echo "LANGUAGES = ${{ inputs.LANGUAGES }}"
+        echo "BUILD_COMMAND = ${{ inputs.BUILD_COMMAND }}"
+        env | grep GITHUB
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ matrix.language }}
+
+    - name: Autobuild
+      if: ${{!inputs.BUILD_COMMAND}}
+      uses: github/codeql-action/autobuild@v2
+
+    - name: Manual build
+      if: ${{inputs.BUILD_COMMAND}}
+      run: |
+        ${{inputs.BUILD_COMMAND}}
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+      with:
+        category: "/language:${{matrix.language}}"

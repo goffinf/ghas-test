@@ -1,2 +1,2 @@
 # ghas-test
-GitHub Advanced Security Test Repo
+CHeck GHAS is enabled in the EMU account

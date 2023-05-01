@@ -38,3 +38,4 @@ jobs:
         echo "RUNNER_TYPE = ${{ inputs.RUNNER_TYPE }}"
         echo "LANGUAGES = ${{ inputs.LANGUAGES }}"
         echo "${{matrix.language}}"
+        echo "/language:${{matrix.language}}"

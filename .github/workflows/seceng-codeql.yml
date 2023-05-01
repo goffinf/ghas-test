@@ -1,4 +1,4 @@
-name: "CodeQL"
+name: "Security_Scan"
 
 on:
   workflow_dispatch:

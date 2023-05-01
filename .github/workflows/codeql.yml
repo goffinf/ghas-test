@@ -12,13 +12,28 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ "main" ]
-  schedule:
-    - cron: '29 20 * * 6'
+  workflow_dispatch:
+    inputs:
+      RUNNER_TYPE:
+        description: 'value for the runs-on arg'
+        required: true
+        type: choice
+        options:
+        - 'self-hosted'
+        - 'ubuntu-latest'
+        default: 'ubuntu-latest'
+      LANGUAGES:
+        description: 'Languages to scan'
+        required: true
+        type: string
+        default: '["csharp", "javascript"]'
+#  push:
+#    branches: [ "main" ]
+#  pull_request:
+#    # The branches below must be a subset of the branches above
+#    branches: [ "main" ]
+#  schedule:
+#    - cron: '29 20 * * 6'
 
 jobs:
   analyze:

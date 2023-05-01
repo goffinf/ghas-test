@@ -19,6 +19,11 @@ on:
 #        default: '["csharp"]'
 #        default: '["javascript"]'
 
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
 #  push:
 #    branches:
 #      - 'main'
@@ -35,10 +40,6 @@ jobs:
   prep:
     name: prepare_for_scan
     runs-on: ["${{ inputs.RUNNER_TYPE }}"]
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
 #    runs-on: ["${{ github.event.inputs.RUNNER_TYPE }}"]
 
     steps:

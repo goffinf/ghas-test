@@ -1,0 +1,39 @@
+name: "JSON_TEST"
+
+on:
+  workflow_dispatch:
+    inputs:
+      RUNNER_TYPE:
+        description: 'value for the runs-on arg'
+        required: true
+        type: choice
+        options:
+        - 'self-hosted'
+        - 'ubuntu-latest'
+        default: 'ubuntu-latest'
+      LANGUAGES:
+        description: 'Languages to scan'
+        required: true
+        type: string
+        default: '["csharp", "javascript"]'
+#        default: '["csharp"]'
+#        default: '["javascript"]'
+
+
+jobs:
+  Analyze:
+    runs-on: 'ubuntu-latest'
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+  
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ${{ fromJSON(github.event.inputs.LANGUAGES) }}        
+    steps:
+    - name: check_inputs
+      run: |
+        echo "RUNNER_TYPE = ${{ inputs.RUNNER_TYPE }}"
+        echo "LANGUAGES = ${{ inputs.LANGUAGES }}"

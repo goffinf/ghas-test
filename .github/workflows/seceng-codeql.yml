@@ -16,41 +16,41 @@ on:
         required: true
         type: string
         default: '["csharp", "javascript"]'
-#        default: '["csharp"]'
-#        default: '["javascript"]'
-
 #  push:
-#    branches:
-#      - 'main'
-#      - 'code-scan-test-1'
+#    branches: [ "main" ]
 #  pull_request:
 #    # The branches below must be a subset of the branches above
-#    branches:
-#      - 'main'
-#      - 'code-scan-test-1'
-##  schedule:
-##    - cron: '19 23 * * 5'
+#    branches: [ "main" ]
+#  schedule:
+#    - cron: '29 20 * * 6'
 
 jobs:
-  Analyze:
+  analyze:
+    name: Analyze
     runs-on: 'ubuntu-latest'
     permissions:
       actions: read
       contents: read
       security-events: write
-  
+
     strategy:
       fail-fast: false
       matrix:
         language: ${{ fromJSON(github.event.inputs.LANGUAGES) }}
-#        language: ${{ fromJSON(inputs.LANGUAGES) }}
-        
+        #language: [ "csharp", "javascript" ]
+        #language: ${{ fromJSON(github.event.inputs.LANGUAGES) }}
+        #language: ["javascript"]
+        # language: [ "csharp", "javascript" ]
+        #language: [ 'csharp', 'javascript' ]
+        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
+        # Use only 'java' to analyze code written in Java, Kotlin or both
+        # Use only 'javascript' to analyze code written in JavaScript, TypeScript or both
+        # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
+
     steps:
-    - name: check_inputs
-      run: |
-        echo "RUNNER_TYPE = ${{ inputs.RUNNER_TYPE }}"
-        echo "LANGUAGES = ${{ inputs.LANGUAGES }}"
-        env | grep GITHUB
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
@@ -64,6 +64,11 @@ jobs:
       with:
         category: "/language:${{matrix.language}}"
 
+#    - name: check_inputs
+#      run: |
+#        echo "RUNNER_TYPE = ${{ inputs.RUNNER_TYPE }}"
+#        echo "LANGUAGES = ${{ inputs.LANGUAGES }}"
+#        env | grep GITHUB
 #  prep:
 #    name: Analyze
 #    runs-on: 'ubuntu-latest'

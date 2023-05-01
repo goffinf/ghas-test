@@ -31,7 +31,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ${{ fromJSON(github.event.inputs.LANGUAGES) }}        
+        language: [ 'csharp', 'javascript' ]
+        #language: ${{ fromJSON(github.event.inputs.LANGUAGES) }}
     steps:
     - name: check_inputs
       run: |

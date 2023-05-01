@@ -47,7 +47,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ["javascript"]
+        language: ${{ fromJSON(github.event.inputs.LANGUAGES) }}
+        #language: ["javascript"]
         # language: [ "csharp", "javascript" ]
         #language: [ 'csharp', 'javascript' ]
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]

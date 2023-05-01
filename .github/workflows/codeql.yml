@@ -47,7 +47,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ "csharp", "javascript" ]
+        language: ["javascript"]
+        # language: [ "csharp", "javascript" ]
         #language: [ 'csharp', 'javascript' ]
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Use only 'java' to analyze code written in Java, Kotlin or both

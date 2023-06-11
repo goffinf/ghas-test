@@ -1,2 +1,9 @@
 my_key="mKhK1VWBCWgpq3x7addZDMk/aJR9Ok3mNg2t6NKe"
-//my_key_id="AKIA2H7C4A2JMGKFPAS7xxxxxxxxxxxxxxxxxxxxxxxxxx"
+// Remove the xxxxxxxxxxx and that change wilol NOT push. It will be caught by push protections for secrets
+// Push protection for secrets requires BOTH an ID and KEY in the SAME file in order to be detected.
+// Thats to cut down on False Positive detections
+// See: https://docs.github.com/en/code-security/secret-scanning/secret-scanning-patterns#about-user--alerts
+/*
+If access to a resource requires paired credentials, then secret scanning will create an alert only when both parts of the pair are detected in the same file. This ensures that the most critical leaks are not hidden behind information about partial leaks. Pair matching also helps reduce false positives since both elements of a pair must be used together to access the provider's resource.
+*/
+my_key_id="AKIA2H7C4A2JMGKFPAS7xxxxxxxxxxxxxxxxxxxxxxxxxx"
